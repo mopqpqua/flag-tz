@@ -1,0 +1,40 @@
+{
+  "name": "flag-tz",
+  "version": "1.0.0",
+  "description": "tz app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mopqpqua/flag-tz.git"
+  },
+  "keywords": [
+    "vue",
+    "js"
+  ],
+  "author": "mpq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mopqpqua/flag-tz/issues"
+  },
+  "homepage": "https://github.com/mopqpqua/flag-tz#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.6",
+    "html-webpack-plugin": "^5.3.1",
+    "jsconfig.json": "^2.2.0",
+    "style-loader": "^2.0.0",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "vue": "^2.6.14",
+    "vuex": "^3.6.2"
+  }
+}
