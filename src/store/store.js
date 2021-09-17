@@ -2,6 +2,7 @@
 import { SET_READY } from "./mutation-types";
 import { SET_MAP } from "./mutation-types";
 import { CLEAR_MAP } from "./mutation-types";
+import { SET_COUNTRY } from "./mutation-types";
 
 // Action types
 import { GET_READY } from "./action-types";
@@ -11,7 +12,7 @@ import { LETS_CLEAR_MAP } from "./action-types";
 export default {
   state: {
     map: {},
-    currentCountry: 'Россия',
+    currentCountry: '',
     objects: [{
       "name": "Белоруссия",
       "cities": [
@@ -191,11 +192,12 @@ export default {
 
     // Getting objects coords of current country
     objectsCoords(state, getters) {
-      return getters.countryFilter[0].cities.map((item) => {
+      // If country is not chosen
+      return getters.countryFilter ? getters.countryFilter[0].cities.map((item) => {
         return item.objects.map((item) => {
           return item.coords;
         });
-      }).flat();
+      }).flat() : false;
     },
   },
 
@@ -208,22 +210,22 @@ export default {
     },
 
     [SET_MAP](state) {
-      // ymaps.ready.call(state, function() {
-        // Creating map object
-        state.map = new ymaps.Map('map', {
-          center: [55.76, 37.64],
-          zoom: 10,
-        });
-      // });
+      // Creating map object
+      state.map = new ymaps.Map('map', {
+        center: [56.83, 60.59],
+        zoom: 4,
+      });
     },
 
     // Removing controls from the map
     [CLEAR_MAP](state) {
       let controlToRemove = ['rulerControl', 'searchControl', 'trafficControl', 'typeSelector', 'zoomControl', 'geolocationControl', 'fullscreenControl'];
 
-      // ymaps.ready.call(state, function() {
-        controlToRemove.forEach((item) => state.map.controls.remove(item));
-      // });
+      controlToRemove.forEach((item) => state.map.controls.remove(item));
+    },
+
+    [SET_COUNTRY](state, country) {
+      state.currentCountry = country;
     },
   },
 
