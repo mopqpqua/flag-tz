@@ -43,7 +43,7 @@ export default {
     }),
 
     ...mapGetters([
-      'objectsCoords'
+      'mapObjects'
     ]),
   },
 
@@ -52,7 +52,6 @@ export default {
       if (this.apiReady) {
         this.getMap();
         this.clearMap();
-        this.setObjects();
       }
     },
 
@@ -68,7 +67,7 @@ export default {
     showData() {
       console.log(this.map);
       console.log(this.$store.getters.countryFilter);
-      console.log(this.$store.getters.objectsCoords);
+      console.log(this.$store.getters.mapObjects);
     },
 
     ...mapMutations([
@@ -93,23 +92,54 @@ export default {
       this.LETS_CLEAR_MAP();
     },
 
-    setObjects() {
-      if (this.objectsCoords !== undefined) return;
-      // Make collection of objects
-      let collection = new ymaps.GeoObjectCollection();
-
-      // Filling collection
-      for (let coords of this.objectsCoords) {
-        collection.add(new ymaps.Placemark(coords));
-      }
-
-      // Adding collection to map
-      this.map.geoObjects.add(collection);
-    },
-
     changeCountry(event) {
       let country = event.target.value;
       this.SET_COUNTRY(country);
+    },
+
+    setObjects() {
+      if (this.mapObjects === undefined) return;
+      // Make clusterer of objects
+      let clusterer = new ymaps.Clusterer();
+
+      // Filling clusterer
+      for (let object of this.mapObjects) {
+        let placemark = new ymaps.Placemark(...this.makePlacemark(object));
+
+        // Centering on click
+        placemark.events.add('click', function(event) {
+          let object = event.get('target');
+          let coords = event.get('coords');
+
+          object.getMap().setCenter(coords);
+        });
+
+        clusterer.add(placemark);
+      }
+
+      // Clean up
+      this.map.geoObjects.removeAll();
+
+      // Adding clusterer to map
+      this.map.geoObjects.add(clusterer);
+      this.centerClusterer(clusterer);
+    },
+
+    makePlacemark(object) {
+      return [object.coords,
+      // Properties
+      {
+        balloonContentHeader: object.name,
+        balloonContentBody: object.director,
+        balloonContentFooter: object.phone,
+      },
+      // Options
+      {}];
+    },
+
+    centerClusterer(clusterer) {
+      // Centering on current country clusterer
+      this.map.setBounds(clusterer.getBounds());
     },
   },
 }

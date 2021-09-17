@@ -122,7 +122,7 @@ export default {
               "director": "Маск Илон Евгеньевич",
               "phone": 89996662299,
               "email": "tesla@majl.com",
-              "coords": [55.11, 61.45]
+              "coords": [55.31, 61.45]
             },
             {
               "name": "Офис НАСА",
@@ -172,7 +172,7 @@ export default {
               "director": "Поттер Гарри Джеймсович",
               "phone": 89996664466,
               "email": "wizard@majl.com",
-              "coords": [53.90, 30.34]
+              "coords": [53.35, 83.71]
             }
           ]
         }
@@ -187,15 +187,15 @@ export default {
   getters: {
     // Getting current country
     countryFilter(state) {
-      return state.objects.filter((item) => item.name == state.currentCountry);
+      return state.objects.find((item) => item.name == state.currentCountry);
     },
 
     // Getting objects coords of current country
-    objectsCoords(state, getters) {
+    mapObjects(state, getters) {
       // If country is not chosen
-      return getters.countryFilter ? getters.countryFilter[0].cities.map((item) => {
+      return getters.countryFilter ? getters.countryFilter.cities.map((item) => {
         return item.objects.map((item) => {
-          return item.coords;
+          return item;
         });
       }).flat() : false;
     },
