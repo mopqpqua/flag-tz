@@ -3,7 +3,7 @@
     <button @click="showData">show data</button>
     <button @click="changeCountry" value="Белоруссия">Белоруссия</button>
     <button @click="changeCountry" value="Россия">Россия</button>
-    <div id="map" class="map"></div>
+    <Map></Map>
   </main>
 </template>
 
@@ -16,24 +16,23 @@
   width: 100%;
   height: 100vh;
 }
-
-.map {
-  width: 500px;
-  height: 500px;
-}
 </style>
 
 <script>
-// State actions
+// State
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
 import { mapActions } from 'vuex';
 
+// Components
+import Map from '@components/Map'
+
 export default {
-  name: 'Map',
+  name: 'App',
 
   components: {
+    Map,
   },
 
   created() {
@@ -53,12 +52,12 @@ export default {
   },
 
   watch: {
-    apiReady() {
-      if (this.apiReady) {
-        this.getMap();
-        this.clearMap();
-      }
-    },
+    // apiReady() {
+    //   if (this.apiReady) {
+    //     this.getMap();
+    //     this.clearMap();
+    //   }
+    // },
 
     // Change country
     currentCountry() {
@@ -81,20 +80,10 @@ export default {
 
     ...mapActions([
       'GET_READY',
-      'GET_MAP',
-      'LETS_CLEAR_MAP'
     ]),
 
     getReady() {
       this.GET_READY();
-    },
-
-    getMap() {
-      this.GET_MAP();
-    },
-
-    clearMap() {
-      this.LETS_CLEAR_MAP();
     },
 
     changeCountry(event) {
