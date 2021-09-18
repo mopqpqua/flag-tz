@@ -37,30 +37,45 @@ export default {
 
   computed: {
     ...mapState({
-      map: state => state.map
+      map: state => state.map,
     }),
   },
 
   methods: {
     showOnMap(office) {
-      this.openBalloon(office);
       this.centerObject(office);
+      this.openBalloon(office);
     },
 
     openBalloon(office) {
-      // this.map.balloon.open(office.coords,
-      //   { content: `<h1>${office.name}</h1>` },
-      //   { closeButton: true });
-
-      office.placemark.balloon.open(
-        office.coords,
+      this.map.balloon.open(office.coords,
         { content: `<h1>${office.name}</h1>` },
-        { closeButton: true }
-      );
+        { closeButton: true });
+
+      // console.log(this);
+      // console.log(office.placemark.getMap());
+      // console.log(office.placemark.getParent().getGeoObjects());
+
+      // All cluster objects
+      // for (let object of office.placemark.getParent().getGeoObjects()) {
+      //   if (object.name == office.name) {
+      //     object.balloon.open();
+      //     break;
+      //   }
+      // }
+
+      // office.placemark.balloon.open(
+      //   office.coords,
+      //   { content: `<h1>${office.name}</h1>` },
+      //   { closeButton: true }
+      // );
     },
 
     centerObject(office) {
-      // console.log(this.map);
+      this.map.panTo(office.coords, this.map.zoom, {
+        checkZoomRange: true,
+        duration: 1000,
+      });
     },
   },
 }

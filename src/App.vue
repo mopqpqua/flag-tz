@@ -85,7 +85,9 @@ export default {
       // Filling clusterer
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
-        placemark.name = 'name';
+        // Add name to identify placemark
+        // if we need
+        placemark.name = object.name;
 
         // Making placemark reference
         // in objects
@@ -96,7 +98,10 @@ export default {
           let object = event.get('target');
           let coords = event.get('coords');
 
-          object.getMap().setCenter(coords);
+          object.getMap().setCenter(coords, object.getMap().zoom, {
+            checkZoomRange: true,
+            duration: 1000,
+          });
         });
 
         clusterer.add(placemark);
