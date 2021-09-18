@@ -24,8 +24,8 @@ export default {
   watch: {
     apiReady() {
       if (this.apiReady) {
-      this.getMap();
-      this.clearMap();
+        this.getMap();
+        this.clearMap();
       }
     },
   },

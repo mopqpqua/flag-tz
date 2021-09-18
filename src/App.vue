@@ -1,8 +1,7 @@
 <template>
   <main class="app">
     <button @click="showData">show data</button>
-    <button @click="changeCountry" value="Белоруссия">Белоруссия</button>
-    <button @click="changeCountry" value="Россия">Россия</button>
+    <Sidebar></Sidebar>
     <Map></Map>
   </main>
 </template>
@@ -15,6 +14,8 @@
 .app {
   width: 100%;
   height: 100vh;
+
+  display: flex;
 }
 </style>
 
@@ -22,17 +23,18 @@
 // State
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
-import { mapMutations } from 'vuex';
 import { mapActions } from 'vuex';
 
 // Components
 import Map from '@components/Map'
+import Sidebar from '@components/Sidebar'
 
 export default {
   name: 'App',
 
   components: {
     Map,
+    Sidebar,
   },
 
   created() {
@@ -52,13 +54,6 @@ export default {
   },
 
   watch: {
-    // apiReady() {
-    //   if (this.apiReady) {
-    //     this.getMap();
-    //     this.clearMap();
-    //   }
-    // },
-
     // Change country
     currentCountry() {
       if (this.apiReady) {
@@ -74,21 +69,12 @@ export default {
       console.log(this.$store.getters.mapObjects);
     },
 
-    ...mapMutations([
-      'SET_COUNTRY'
-    ]),
-
     ...mapActions([
       'GET_READY',
     ]),
 
     getReady() {
       this.GET_READY();
-    },
-
-    changeCountry(event) {
-      let country = event.target.value;
-      this.SET_COUNTRY(country);
     },
 
     setObjects() {
@@ -99,6 +85,7 @@ export default {
       // Filling clusterer
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
+        placemark.name = 'name';
 
         // Making placemark reference
         // in objects
