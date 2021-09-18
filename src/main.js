@@ -5,11 +5,11 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import Store from '@/store/store';
-import Map from '@/Map';
+import App from '@/App';
 
 const store = new Vuex.Store(Store);
 
 new Vue({
-  render: (v) => v(Map),
+  render: (v) => v(App),
   store,
-}).$mount('#map');
+}).$mount('#app');

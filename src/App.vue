@@ -1,16 +1,21 @@
 <template>
-  <section>
+  <main class="app">
     <button @click="showData">show data</button>
     <button @click="changeCountry" value="Белоруссия">Белоруссия</button>
     <button @click="changeCountry" value="Россия">Россия</button>
     <div id="map" class="map"></div>
-  </section>
+  </main>
 </template>
 
 <style scoped>
 /* Imports */
 @import url('css/fonts.css');
 @import url('css/vars.css');
+
+.app {
+  width: 100%;
+  height: 100vh;
+}
 
 .map {
   width: 500px;
@@ -105,6 +110,10 @@ export default {
       // Filling clusterer
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
+
+        // Making placemark reference
+        // in objects
+        object.placemark = placemark;
 
         // Centering on click
         placemark.events.add('click', function(event) {
