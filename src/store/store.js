@@ -229,6 +229,9 @@ export default {
       let controlToRemove = ['rulerControl', 'searchControl', 'trafficControl', 'typeSelector', 'zoomControl', 'geolocationControl', 'fullscreenControl'];
 
       controlToRemove.forEach((item) => state.map.controls.remove(item));
+
+      // Making our map black and white
+      document.querySelector('canvas').style.filter = 'grayscale(100%)';
     },
 
     [SET_COUNTRY](state, country) {

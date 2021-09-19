@@ -114,6 +114,7 @@ export default {
       {
         hideIconOnBalloonOpen: false,
         openBalloonOnClick: false,
+        iconContentLayout: 'circle',
       }];
     },
 
