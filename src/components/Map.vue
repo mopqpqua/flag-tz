@@ -31,6 +31,7 @@ export default {
     apiReady() {
       if (this.apiReady) {
         this.getMap();
+        this.setStyles();
         this.clearMap();
         this.setClusterer();
       }
@@ -40,6 +41,7 @@ export default {
   methods: {
     ...mapActions([
       'GET_MAP',
+      'LETS_SET_STYLES',
       'LETS_CLEAR_MAP',
       'LETS_SET_CLUSTERER'
     ]),
@@ -48,14 +50,19 @@ export default {
       this.GET_MAP();
     },
 
+    setStyles() {
+      this.LETS_SET_STYLES();
+    },
+
     clearMap() {
       this.LETS_CLEAR_MAP();
     },
 
     setClusterer() {
       let clusterer = new ymaps.Clusterer({
-        clusterIconContentLayout: 'big-circle',
+        preset: 'islands#nightClusterIcons',
       });
+
       this.LETS_SET_CLUSTERER(clusterer);
     },
   },

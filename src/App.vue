@@ -106,13 +106,9 @@ export default {
       return [object.coords,
       // Properties
       {
-        balloonContent: [
-          `<div class="map__balloon">`,
-          `${object.name}</div>`
-        ].join(),
-        // balloonContentHeader: object.name,
-        // balloonContentBody: object.director,
-        // balloonContentFooter: object.phone,
+        balloonContentHeader: object.name,
+        balloonContentBody: object.director,
+        balloonContentFooter: object.phone,
       },
       // Options
       {

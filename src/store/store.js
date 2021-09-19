@@ -1,6 +1,7 @@
 // Mutation types
 import { SET_READY } from "./mutation-types";
 import { SET_MAP } from "./mutation-types";
+import { SET_STYLES } from "./mutation-types";
 import { CLEAR_MAP } from "./mutation-types";
 import { SET_COUNTRY } from "./mutation-types";
 import { SET_CLUSTERER } from "./mutation-types";
@@ -8,6 +9,7 @@ import { SET_CLUSTERER } from "./mutation-types";
 // Action types
 import { GET_READY } from "./action-types";
 import { GET_MAP } from "./action-types";
+import { LETS_SET_STYLES } from "./action-types";
 import { LETS_CLEAR_MAP } from "./action-types";
 
 import { LETS_SET_CLUSTERER } from "./action-types";
@@ -224,6 +226,9 @@ export default {
       });
     },
 
+    [SET_STYLES](state) {
+    },
+
     // Removing controls from the map
     [CLEAR_MAP](state) {
       let controlToRemove = ['rulerControl', 'searchControl', 'trafficControl', 'typeSelector', 'zoomControl', 'geolocationControl', 'fullscreenControl'];
@@ -250,6 +255,10 @@ export default {
 
     [GET_MAP]({ commit }) {
       commit(SET_MAP);
+    },
+
+    [LETS_SET_STYLES]({ commit }) {
+      commit(SET_STYLES);
     },
 
     [LETS_CLEAR_MAP]({ commit }) {
