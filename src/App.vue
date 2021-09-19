@@ -171,6 +171,7 @@ export default {
       // Check if we already have
       // current country in queries
       for (let country in this.geoQueries) {
+        if (result) continue;
         result = this.currentCountry == country;
       }
 
