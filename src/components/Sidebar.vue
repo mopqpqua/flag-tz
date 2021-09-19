@@ -5,11 +5,13 @@
       <button
         class="button control__button"
         :class="{ 'control__button--active': currentCountry == 'Белоруссия' }"
+        :disabled="!apiReady"
         @click="changeCountry"
         value="Белоруссия">Белоруссия</button>
       <button
         class="button control__button"
         :class="{ 'control__button--active': currentCountry == 'Россия' }"
+        :disabled="!apiReady"
         @click="changeCountry"
         value="Россия">Россия</button>
     </div>
@@ -18,15 +20,7 @@
       <div
         class="city"
         v-for="city in countryFilter.cities" :key="city.name">
-        <div class="city__title" @click="toggleOffices(city.name)">
-          <p
-            class="city__name">{{ city.name }}</p>
-          <img
-            class="city__down-arrow"
-            src="assets/img/down_arrow_icon.svg"
-            alt="down-arrow">
-        </div>
-
+        <CityTitle :city="city"></CityTitle>
         <Offices :city="city" ref="offices"></Offices>
       </div>
     </div>
@@ -38,6 +32,13 @@
 .sidebar {
   width: 26.5%;
   height: 100vh;
+
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 1px;
 }
 
 
@@ -62,12 +63,23 @@
 }
 
 .control__button {
-  width: 49.99%;
+  width: 49.98%;
 
   background: #FFF;
   border: 1px solid var(--grey-color);
 
   color: var(--grey-color);
+}
+
+.control__button:disabled {
+  background: var(--light-grey-color);
+  color: #FFF;
+}
+
+.control__button:hover {
+  background: var(--orange-color);
+
+  color: #FFF;
 }
 
 .control__button--active {
@@ -89,26 +101,6 @@
 .city:first-child {
   border-top: 1px solid var(--light-grey-color);
 }
-
-.city__title {
-  height: 70px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.city__down-arrow {
-  width: 15px;
-
-  margin: 0 10% 0 0;
-}
-
-.city__name {
-  margin: 0 0 0 7%;
-
-  color: var(--indigo-color);
-}
 /* City end */
 </style>
 
@@ -120,10 +112,12 @@ import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
 
 // Components
+import CityTitle from '@components/CityTitle';
 import Offices from '@components/Offices';
 
 export default {
   components: {
+    CityTitle,
     Offices,
   },
 
@@ -131,6 +125,7 @@ export default {
     ...mapState({
       map: state => state.map,
       currentCountry: state => state.currentCountry,
+      apiReady: state => state.condition.apiReady,
     }),
 
     ...mapGetters([
