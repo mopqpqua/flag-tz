@@ -103,11 +103,7 @@ export default {
         query = this.geoQueries[this.currentCountry];
       }
 
-      console.log(query);
-
-      query.each(function(placemark) {
-        map.clusterer.add(placemark);
-      });
+      this.updateClusterer();
 
       map.geoObjects.add(map.clusterer);
 
@@ -132,6 +128,10 @@ export default {
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
 
+        // Add placemark reference to object
+        // to open balloon in the future
+        object.placemark = placemark;
+
         // Centering on click
         placemark.events.add('click', function(event) {
           let object = event.get('target');
@@ -149,6 +149,17 @@ export default {
       return storage;
     },
 
+    updateClusterer() {
+      // Clean up clusterer
+      this.map.clusterer.removeAll();
+
+      // And add new objects into it
+      for (let object of this.mapObjects) {
+        let placemark = new ymaps.Placemark(...this.makePlacemark(object));
+        this.map.clusterer.add(placemark);
+      }
+    },
+
     checkQueries() {
       let result;
 
@@ -160,8 +171,6 @@ export default {
 
       return result;
     },
-
-    makeGeoQuery() {},
 
     centerClusterer(clusterer) {
       // Centering on current country clusterer
