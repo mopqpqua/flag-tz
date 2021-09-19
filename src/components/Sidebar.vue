@@ -2,11 +2,19 @@
   <aside class="sidebar">
 
     <div class="control">
-      <button class="button control-button" @click="changeCountry" value="Белоруссия">Белоруссия</button>
-      <button class="button control-button" @click="changeCountry" value="Россия">Россия</button>
+      <button
+        class="button control__button"
+        :class="{ 'control__button--active': currentCountry == 'Белоруссия' }"
+        @click="changeCountry"
+        value="Белоруссия">Белоруссия</button>
+      <button
+        class="button control__button"
+        :class="{ 'control__button--active': currentCountry == 'Россия' }"
+        @click="changeCountry"
+        value="Россия">Россия</button>
     </div>
 
-    <div class="object-list" v-if="countryFilter">
+    <div class="cities-list" v-if="countryFilter">
       <div
         class="city"
         v-for="city in countryFilter.cities" :key="city.name">
@@ -32,6 +40,46 @@
   height: 100vh;
 }
 
+
+/* Button start */
+.button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 0;
+}
+/* Button end */
+
+
+/* Control start */
+.control {
+  height: 35px;
+
+  margin: 0 0 24px 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.control__button {
+  width: 49.99%;
+
+  background: #FFF;
+  border: 1px solid var(--grey-color);
+
+  color: var(--grey-color);
+}
+
+.control__button--active {
+  background: var(--orange-color);
+  border: none;
+
+  color: #FFF
+}
+/* Control end */
+
+
+/* City start */
 .city {
   width: 100%;
 
@@ -61,6 +109,7 @@
 
   color: var(--indigo-color);
 }
+/* City end */
 </style>
 
 
@@ -80,7 +129,8 @@ export default {
 
   computed: {
     ...mapState({
-      map: state => state.map
+      map: state => state.map,
+      currentCountry: state => state.currentCountry,
     }),
 
     ...mapGetters([

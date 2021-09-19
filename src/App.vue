@@ -1,6 +1,5 @@
 <template>
   <main class="app">
-    <button @click="showData">show data</button>
     <Sidebar></Sidebar>
     <Map></Map>
   </main>
@@ -64,13 +63,6 @@ export default {
   },
 
   methods: {
-    showData() {
-      console.log(this.map);
-      console.log(this.$store.getters.countryFilter);
-      console.log(this.$store.getters.mapObjects);
-      console.log(this.$store.state.geoQueries);
-    },
-
     ...mapActions([
       'GET_READY',
     ]),
