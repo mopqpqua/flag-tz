@@ -106,15 +106,20 @@ export default {
       return [object.coords,
       // Properties
       {
-        balloonContentHeader: object.name,
-        balloonContentBody: object.director,
-        balloonContentFooter: object.phone,
+        balloonContent: [
+          `<div class="map__balloon">`,
+          `${object.name}</div>`
+        ].join(),
+        // balloonContentHeader: object.name,
+        // balloonContentBody: object.director,
+        // balloonContentFooter: object.phone,
       },
       // Options
       {
         hideIconOnBalloonOpen: false,
         openBalloonOnClick: false,
-        iconContentLayout: 'circle',
+        preset: 'islands#nightCircleIcon',
+        iconColor: '#00325E',
       }];
     },
 

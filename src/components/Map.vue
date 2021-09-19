@@ -8,25 +8,10 @@
   height: 100%;
 }
 
-.map__circle {
-  width: 40px;
-  height: 40px;
-
-  position: absolute;
-  top: -7px;
-  left: -7px;
-
-  border-radius: 50%;
-
-  background: var(--indigo-color);
-}
-
-.map__circle--big {
-  width: 60px;
-  height: 60px;
-
-  top: -9px;
-  left: -9px;
+.map__balloon {
+  width: 100px;
+  height: 100px;
+  background: tomato;
 }
 </style>
 
@@ -45,7 +30,6 @@ export default {
   watch: {
     apiReady() {
       if (this.apiReady) {
-        this.makeLayouts();
         this.getMap();
         this.clearMap();
         this.setClusterer();
@@ -59,19 +43,6 @@ export default {
       'LETS_CLEAR_MAP',
       'LETS_SET_CLUSTERER'
     ]),
-
-    makeLayouts() {
-      let circleClass = ymaps.templateLayoutFactory.createClass(
-        '<div class="map__circle"></div>'
-      );
-
-      let bigCircleClass = ymaps.templateLayoutFactory.createClass(
-        '<div class="map__circle map__circle--big"></div>'
-      );
-
-      ymaps.layout.storage.add('circle', circleClass);
-      ymaps.layout.storage.add('big-circle', bigCircleClass);
-    },
 
     getMap() {
       this.GET_MAP();
