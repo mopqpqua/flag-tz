@@ -119,7 +119,10 @@ export default {
         balloonContentFooter: object.phone,
       },
       // Options
-      {}];
+      {
+        hideIconOnBalloonOpen: false,
+        openBalloonOnClick: false,
+      }];
     },
 
     makeQuery() {
@@ -131,18 +134,6 @@ export default {
         // Add placemark reference to object
         // to open balloon in the future
         object.placemark = placemark;
-
-        // Centering on click
-        placemark.events.add('click', function(event) {
-          let object = event.get('target');
-          let coords = event.get('coords');
-
-          object.getMap().setCenter(coords, object.getMap().zoom, {
-            checkZoomRange: true,
-            duration: 300,
-          });
-        });
-
         storage.push(placemark);
       }
 
@@ -156,6 +147,20 @@ export default {
       // And add new objects into it
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
+
+        // Centering on click
+        placemark.events.add('click', function(event) {
+          let object = event.get('target');
+          let coords = event.get('coords');
+
+          object.balloon.open().then(() => {
+            object.getMap().setCenter(coords, object.getMap().zoom, {
+              checkZoomRange: true,
+              duration: 300,
+            });
+          })
+        });
+
         this.map.clusterer.add(placemark);
       }
     },
