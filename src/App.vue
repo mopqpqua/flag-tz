@@ -45,6 +45,7 @@ export default {
     ...mapState({
       map: state => state.map,
       currentCountry: state => state.currentCountry,
+      geoQueries: state => state.geoQueries,
       apiReady: state => state.condition.apiReady,
     }),
 
@@ -67,6 +68,7 @@ export default {
       console.log(this.map);
       console.log(this.$store.getters.countryFilter);
       console.log(this.$store.getters.mapObjects);
+      console.log(this.$store.state.geoQueries);
     },
 
     ...mapActions([
@@ -79,10 +81,10 @@ export default {
 
     setObjects() {
       if (this.mapObjects === undefined) return;
-      // Make clusterer of objects
+
+      let storage = [];
       let clusterer = new ymaps.Clusterer();
 
-      // Filling clusterer
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
         // Add name to identify placemark
@@ -100,18 +102,27 @@ export default {
 
           object.getMap().setCenter(coords, object.getMap().zoom, {
             checkZoomRange: true,
-            duration: 1000,
+            duration: 300,
           });
         });
 
-        clusterer.add(placemark);
+        storage.push(placemark);
+        clusterer.add(new ymaps.Placemark(...this.makePlacemark(object)));
       }
 
-      // Clean up
-      this.map.geoObjects.removeAll();
+      let query = ymaps.geoQuery(storage);
 
-      // Adding clusterer to map
+      query.countryName = this.currentCountry;
+      query.addToMap(this.map);
+      query.each(function(placemark) {
+        placemark.options.set('visible', false);
+      });
+
+      this.geoQueries[this.currentCountry] = query;
+
+      this.map.removeAll();
       this.map.geoObjects.add(clusterer);
+
       this.centerClusterer(clusterer);
     },
 

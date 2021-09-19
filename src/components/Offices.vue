@@ -48,9 +48,9 @@ export default {
     },
 
     openBalloon(office) {
-      this.map.balloon.open(office.coords,
-        { content: `<h1>${office.name}</h1>` },
-        { closeButton: true });
+      // this.map.balloon.open(office.coords,
+      //   { content: `<h1>${office.name}</h1>` },
+      //   { closeButton: true });
 
       // console.log(this);
       // console.log(office.placemark.getMap());
@@ -64,11 +64,11 @@ export default {
       //   }
       // }
 
-      // office.placemark.balloon.open(
-      //   office.coords,
-      //   { content: `<h1>${office.name}</h1>` },
-      //   { closeButton: true }
-      // );
+      office.placemark.balloon.open(
+        office.coords,
+        { content: `<h1>${office.name}</h1>` },
+        { closeButton: true }
+      );
     },
 
     centerObject(office) {

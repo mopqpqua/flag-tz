@@ -12,7 +12,11 @@ import { LETS_CLEAR_MAP } from "./action-types";
 export default {
   state: {
     map: {},
+
     currentCountry: '',
+
+    geoQueries: {},
+
     objects: [{
       "name": "Белоруссия",
       "cities": [
