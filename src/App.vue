@@ -81,49 +81,37 @@ export default {
 
     setObjects() {
       if (this.mapObjects === undefined) return;
+      let query;
+      let map = this.map;
 
-      let storage = [];
-      let clusterer = new ymaps.Clusterer();
+      // If we dont have query for
+      // current country
+      // we will make it
+      if (!this.checkQueries()) {
+        query = ymaps.geoQuery(this.makeQuery());
+        this.geoQueries[this.currentCountry] = query;
 
-      for (let object of this.mapObjects) {
-        let placemark = new ymaps.Placemark(...this.makePlacemark(object));
-        // Add name to identify placemark
-        // if we need
-        placemark.name = object.name;
+        // Add every object of query
+        // to map...
+        query.addToMap(map);
 
-        // Making placemark reference
-        // in objects
-        object.placemark = placemark;
-
-        // Centering on click
-        placemark.events.add('click', function(event) {
-          let object = event.get('target');
-          let coords = event.get('coords');
-
-          object.getMap().setCenter(coords, object.getMap().zoom, {
-            checkZoomRange: true,
-            duration: 300,
-          });
+        // ...then hide them
+        query.each(function(placemark) {
+          placemark.options.set('visible', false);
         });
-
-        storage.push(placemark);
-        clusterer.add(new ymaps.Placemark(...this.makePlacemark(object)));
+      } else {
+        query = this.geoQueries[this.currentCountry];
       }
 
-      let query = ymaps.geoQuery(storage);
+      console.log(query);
 
-      query.countryName = this.currentCountry;
-      query.addToMap(this.map);
       query.each(function(placemark) {
-        placemark.options.set('visible', false);
+        map.clusterer.add(placemark);
       });
 
-      this.geoQueries[this.currentCountry] = query;
+      map.geoObjects.add(map.clusterer);
 
-      this.map.removeAll();
-      this.map.geoObjects.add(clusterer);
-
-      this.centerClusterer(clusterer);
+      this.centerClusterer(map.clusterer);
     },
 
     makePlacemark(object) {
@@ -137,6 +125,43 @@ export default {
       // Options
       {}];
     },
+
+    makeQuery() {
+      let storage = [];
+
+      for (let object of this.mapObjects) {
+        let placemark = new ymaps.Placemark(...this.makePlacemark(object));
+
+        // Centering on click
+        placemark.events.add('click', function(event) {
+          let object = event.get('target');
+          let coords = event.get('coords');
+
+          object.getMap().setCenter(coords, object.getMap().zoom, {
+            checkZoomRange: true,
+            duration: 300,
+          });
+        });
+
+        storage.push(placemark);
+      }
+
+      return storage;
+    },
+
+    checkQueries() {
+      let result;
+
+      // Check if we already have
+      // current country in queries
+      for (let country in this.geoQueries) {
+        result = this.currentCountry == country;
+      }
+
+      return result;
+    },
+
+    makeGeoQuery() {},
 
     centerClusterer(clusterer) {
       // Centering on current country clusterer

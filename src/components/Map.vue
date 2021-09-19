@@ -26,6 +26,7 @@ export default {
       if (this.apiReady) {
         this.getMap();
         this.clearMap();
+        this.setClusterer();
       }
     },
   },
@@ -33,7 +34,8 @@ export default {
   methods: {
     ...mapActions([
       'GET_MAP',
-      'LETS_CLEAR_MAP'
+      'LETS_CLEAR_MAP',
+      'LETS_SET_CLUSTERER'
     ]),
 
     getMap() {
@@ -42,6 +44,11 @@ export default {
 
     clearMap() {
       this.LETS_CLEAR_MAP();
+    },
+
+    setClusterer() {
+      let clusterer = new ymaps.Clusterer();
+      this.LETS_SET_CLUSTERER(clusterer);
     },
   },
 }

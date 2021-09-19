@@ -3,11 +3,14 @@ import { SET_READY } from "./mutation-types";
 import { SET_MAP } from "./mutation-types";
 import { CLEAR_MAP } from "./mutation-types";
 import { SET_COUNTRY } from "./mutation-types";
+import { SET_CLUSTERER } from "./mutation-types";
 
 // Action types
 import { GET_READY } from "./action-types";
 import { GET_MAP } from "./action-types";
 import { LETS_CLEAR_MAP } from "./action-types";
+
+import { LETS_SET_CLUSTERER } from "./action-types";
 
 export default {
   state: {
@@ -231,6 +234,10 @@ export default {
     [SET_COUNTRY](state, country) {
       state.currentCountry = country;
     },
+
+    [SET_CLUSTERER](state, clusterer) {
+      state.map.clusterer = clusterer;
+    }
   },
 
   actions: {
@@ -245,5 +252,9 @@ export default {
     [LETS_CLEAR_MAP]({ commit }) {
       commit(CLEAR_MAP);
     },
+
+    [LETS_SET_CLUSTERER](context, clusterer) {
+      context.commit(SET_CLUSTERER, clusterer);
+    }
   },
 };
