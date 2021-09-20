@@ -18,6 +18,10 @@ export default {
   state: {
     map: {},
 
+    styles: {
+      balloonLayout: '',
+    },
+
     currentCountry: '',
 
     geoQueries: {},
@@ -227,6 +231,17 @@ export default {
     },
 
     [SET_STYLES](state) {
+      // Custom balloon content layout
+      let balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+        '<div class="balloon">' +
+        '<h3 class="balloon__title">{{ properties.name }}</h3>' +
+        '<p>{{ properties.director }}</p>' +
+        '<p>{{ properties.phone }}</p>' +
+        `<a class="balloon__email" href="mailto:{{ properties.email }}"}>{{ properties.email }}</a>` +
+        '</div>'
+      );
+
+      state.styles.balloonLayout = balloonContentLayout;
     },
 
     // Removing controls from the map

@@ -8,11 +8,29 @@
   height: 100%;
 }
 
-.map__balloon {
-  width: 100px;
-  height: 100px;
-  background: tomato;
+.balloon {
+  padding: 0 20px 20px 20px;
 }
+
+
+/* Balloon start */
+.balloon__title {
+  font-size: 14px;
+  color: var(--orange-color);
+}
+
+.balloon__email {
+  color: var(--blue-color);
+}
+
+.balloon__email:active {
+  color: var(--orange-color);
+}
+
+.balloon__email:visited {
+  color: var(--blue-color);
+}
+/* Balloon end */
 </style>
 
 <script>

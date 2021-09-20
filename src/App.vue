@@ -43,6 +43,7 @@ export default {
   computed: {
     ...mapState({
       map: state => state.map,
+      styles: state => state.styles,
       currentCountry: state => state.currentCountry,
       geoQueries: state => state.geoQueries,
       apiReady: state => state.condition.apiReady,
@@ -106,16 +107,19 @@ export default {
       return [object.coords,
       // Properties
       {
-        balloonContentHeader: object.name,
-        balloonContentBody: object.director,
-        balloonContentFooter: object.phone,
+        name: object.name,
+        director: object.director,
+        phone: object.phone,
+        email: object.email,
       },
       // Options
       {
         hideIconOnBalloonOpen: false,
+        // Disable default click event to
+        // change it to custom
         openBalloonOnClick: false,
         preset: 'islands#nightCircleIcon',
-        iconColor: '#00325E',
+        balloonContentLayout: this.styles.balloonLayout,
       }];
     },
 

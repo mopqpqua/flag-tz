@@ -35,6 +35,18 @@
 
   color: var(--indigo-color);
 }
+
+.office__email {
+  color: var(--blue-color);
+}
+
+.office__email:active {
+  color: var(--orange-color);
+}
+
+.office__email:visited {
+  color: var(--blue-color);
+}
 /* Office end */
 
 

@@ -1,5 +1,10 @@
 <template>
-  <div class="city-title" @click="toggleOffices(city.name)">
+  <div
+    class="city-title"
+    :class="{ 'city-title--active': isActive }"
+    @click="toggleOffices(city.name)"
+    @mouseenter="isActive = !isActive"
+    @mouseleave="isActive = !isActive">
     <p class="city-title__name" :class="{ 'city-title__name--active': isOpen }">
       {{ city.name }}
     </p>
@@ -23,6 +28,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.city-title--active {
+  background: var(--light-grey-color);
 }
 
 .city-title__name {
@@ -57,6 +66,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      isActive: false,
     };
   },
 
