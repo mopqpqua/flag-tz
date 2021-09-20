@@ -27,6 +27,7 @@
 /* Office start */
 .office {
   margin: 0 0 45px 0;
+  cursor: pointer;
 }
 
 .office__name {
