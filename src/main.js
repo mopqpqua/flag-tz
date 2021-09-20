@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-// State manager
+// Менеджер состояния
 Vue.use(Vuex);
 
 import Store from '@/store/store';
 import App from '@/App';
 
-// Icons
+// Иконки
 import DownArrowIcon from '@/assets/img/down_arrow_icon.svg';
 import UpArrowIcon from '@/assets/img/up_arrow_icon.svg';
 

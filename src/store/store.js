@@ -1,4 +1,4 @@
-// Mutation types
+// Типы мутаций
 import { SET_READY } from "./mutation-types";
 import { SET_MAP } from "./mutation-types";
 import { SET_STYLES } from "./mutation-types";
@@ -6,7 +6,7 @@ import { CLEAR_MAP } from "./mutation-types";
 import { SET_COUNTRY } from "./mutation-types";
 import { SET_CLUSTERER } from "./mutation-types";
 
-// Action types
+// Типы экшенов
 import { GET_READY } from "./action-types";
 import { GET_MAP } from "./action-types";
 import { LETS_SET_STYLES } from "./action-types";
@@ -14,7 +14,7 @@ import { LETS_CLEAR_MAP } from "./action-types";
 
 import { LETS_SET_CLUSTERER } from "./action-types";
 
-// JSON data example
+// JSON пример исходных данных
 import Data from '@/example.json';
 
 export default {
@@ -37,14 +37,14 @@ export default {
   },
 
   getters: {
-    // Getting current country
+    // Достаем из исходных данных текущую страну
     countryFilter(state) {
       return state.objects.find((item) => item.name == state.currentCountry);
     },
 
-    // Getting objects coords of current country
+    // Достаем из текущей страны все объекты (офисы)
     mapObjects(state, getters) {
-      // If country is not chosen
+      // Проверка на то, что страна выбрана
       return getters.countryFilter ? getters.countryFilter.cities.map((item) => {
         return item.objects.map((item) => {
           return item;
@@ -56,13 +56,13 @@ export default {
   mutations: {
     [SET_READY](state) {
       ymaps.ready.call(state, function() {
-        // Yandex Maps API is ready
+        // Yandex Maps API готовы
         state.condition.apiReady = true;
       });
     },
 
     [SET_MAP](state) {
-      // Creating map object
+      // Создание карты
       state.map = new ymaps.Map('map', {
         center: [56.83, 60.59],
         zoom: 4,
@@ -70,7 +70,8 @@ export default {
     },
 
     [SET_STYLES](state) {
-      // Custom balloon content layout
+      // Кастомный шаблон содержимого балуна
+      // P.S: к сожалению я не смог изменить стили всего макета
       let balloonContentLayout = ymaps.templateLayoutFactory.createClass(
         '<div class="balloon">' +
         '<h3 class="balloon__title">{{ properties.name }}</h3>' +
@@ -83,13 +84,13 @@ export default {
       state.styles.balloonLayout = balloonContentLayout;
     },
 
-    // Removing controls from the map
+    // Удаление лишних элементов управления с карты
     [CLEAR_MAP](state) {
       let controlToRemove = ['rulerControl', 'searchControl', 'trafficControl', 'typeSelector', 'zoomControl', 'geolocationControl', 'fullscreenControl'];
 
       controlToRemove.forEach((item) => state.map.controls.remove(item));
 
-      // Making our map black and white
+      // Делаем карту черно-белой
       document.querySelector('canvas').style.filter = 'grayscale(100%)';
     },
 

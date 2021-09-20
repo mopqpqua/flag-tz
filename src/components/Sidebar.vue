@@ -41,7 +41,7 @@
   overflow-y: scroll;
 }
 
-/* Hide scrollbar */
+/* Скрываем скроллбар */
 .sidebar::-webkit-scrollbar {
   width: 0px;
 }
@@ -111,12 +111,12 @@
 
 
 <script>
-// State
+// Состояние
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
 
-// Components
+// Компоненты
 import CityTitle from '@components/CityTitle';
 import Offices from '@components/Offices';
 
@@ -143,6 +143,8 @@ export default {
       'SET_COUNTRY'
     ]),
 
+    // Вызывает экшн, присваивающий значение
+    // выбранной страны в currentCountry состояния
     changeCountry(event) {
       let country = event.target.value;
       this.SET_COUNTRY(country);

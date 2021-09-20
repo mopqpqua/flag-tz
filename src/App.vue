@@ -6,7 +6,7 @@
 </template>
 
 <style scoped>
-/* Imports */
+/* Импорты */
 @import url('css/fonts.css');
 @import url('css/vars.css');
 
@@ -19,12 +19,12 @@
 </style>
 
 <script>
-// State
+// Состояние
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 
-// Components
+// Компоненты
 import Map from '@components/Map'
 import Sidebar from '@components/Sidebar'
 
@@ -55,7 +55,8 @@ export default {
   },
 
   watch: {
-    // Change country
+    // Следит за сменой страны
+    // и изменяет кластеризатор
     currentCountry() {
       if (this.apiReady) {
         this.setObjects();
@@ -77,18 +78,20 @@ export default {
       let query;
       let map = this.map;
 
-      // If we dont have query for
-      // current country
-      // we will make it
+      /*
+      * Если выборки для объектов в mapObjects
+      * не существует
+      * то мы создадим их
+      */
       if (!this.checkQueries()) {
         query = ymaps.geoQuery(this.makeQuery());
         this.geoQueries[this.currentCountry] = query;
 
-        // Add every object of query
-        // to map...
+        // Добавляем каждый объект выборки
+        // на карту...
         query.addToMap(map);
 
-        // ...then hide them
+        // ...и затем скрываем
         query.each(function(placemark) {
           placemark.options.set('visible', false);
         });
@@ -96,10 +99,11 @@ export default {
         query = this.geoQueries[this.currentCountry];
       }
 
+      // Обновляем кластеризатор
       this.updateClusterer();
 
+      // Добавляем его на карту и центрируемся
       map.geoObjects.add(map.clusterer);
-
       this.centerClusterer(map.clusterer);
     },
 
@@ -115,8 +119,8 @@ export default {
       // Options
       {
         hideIconOnBalloonOpen: false,
-        // Disable default click event to
-        // change it to custom
+        // Отключаем стандартное поведение при клике
+        // на маркер чтобы управлять им самим
         openBalloonOnClick: false,
         preset: 'islands#nightCircleIcon',
         balloonContentLayout: this.styles.balloonLayout,
@@ -129,9 +133,10 @@ export default {
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
 
-        // Add placemark reference to object
-        // to open balloon in the future
+        // В модель объекта добавляем placemark,
+        // чтобы в будущем открыть его балун
         object.placemark = placemark;
+
         storage.push(placemark);
       }
 
@@ -139,14 +144,15 @@ export default {
     },
 
     updateClusterer() {
-      // Clean up clusterer
+      // Чистим кластеризатор...
       this.map.clusterer.removeAll();
 
-      // And add new objects into it
+      // ...и добавляем туда новые объекты
       for (let object of this.mapObjects) {
         let placemark = new ymaps.Placemark(...this.makePlacemark(object));
 
-        // Centering on click
+        // Событие клика, при котором карта
+        // будет центрироваться
         placemark.events.add('click', function(event) {
           let object = event.get('target');
           let coords = event.get('coords');
@@ -166,8 +172,7 @@ export default {
     checkQueries() {
       let result;
 
-      // Check if we already have
-      // current country in queries
+      // Проверяем наличие в geoQueries текущей страны
       for (let country in this.geoQueries) {
         if (result) continue;
         result = this.currentCountry == country;
@@ -177,7 +182,8 @@ export default {
     },
 
     centerClusterer(clusterer) {
-      // Centering on current country clusterer
+      // Центрируемся на текущих объектах
+      // в кластеризаторе
       this.map.setBounds(clusterer.getBounds());
     },
   },

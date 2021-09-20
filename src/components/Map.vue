@@ -34,7 +34,7 @@
 </style>
 
 <script>
-// State
+// Состояние
 import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
 
@@ -46,6 +46,8 @@ export default {
   },
 
   watch: {
+    // Ставим карту, создаем стили балуна,
+    // удаляем лишнее с карты и создаем кластеризатор
     apiReady() {
       if (this.apiReady) {
         this.getMap();

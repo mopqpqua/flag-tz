@@ -58,7 +58,7 @@
 </style>
 
 <script>
-// State
+// Состояние
 import { mapState } from 'vuex';
 
 export default {
@@ -83,6 +83,8 @@ export default {
   },
 
   methods: {
+    // Раскрывает балон используя
+    // ссылку на placemark в объекте
     showOnMap(office) {
       office.placemark.balloon.open()
       .then(() => {

@@ -71,6 +71,8 @@ export default {
   },
 
   methods: {
+    // Раскрывает список объектов
+    // в боковй панели
     toggleOffices(city) {
       this.isOpen = !this.isOpen;
       this.$parent.toggleOffices(city);
