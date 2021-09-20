@@ -10,12 +10,12 @@
     </p>
     <img
       class="city-title__down-arrow"
-      src="assets/img/down_arrow_icon.svg"
+      src="https://cdn.glitch.com/b2bae586-de3c-45ae-9813-5f8ba057f304%2Fdown_arrow_icon.svg?v=1632132881818"
       alt="down-arrow"
       v-if="!isOpen">
     <img
       class="city-title__up-arrow"
-      src="assets/img/up_arrow_icon.svg"
+      src="https://cdn.glitch.com/b2bae586-de3c-45ae-9813-5f8ba057f304%2Fup_arrow_icon.svg?v=1632132881818"
       alt="up-arrow"
       v-else>
   </div>

@@ -8,8 +8,8 @@ import Store from '@/store/store';
 import App from '@/App';
 
 // Icons
-import DownArrowIcon from '@/assets/img/down_arrow_icon.svg';
-import UpArrowIcon from '@/assets/img/up_arrow_icon.svg';
+import DownArrowIcon from '@/assets/down_arrow_icon.svg';
+import UpArrowIcon from '@/assets/up_arrow_icon.svg';
 
 const store = new Vuex.Store(Store);
 
