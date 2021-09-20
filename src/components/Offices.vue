@@ -8,7 +8,7 @@
       <p class="office__name info">{{ office.name }}</p>
       <p class="info">{{ office.director }}</p>
       <p class="info">{{ office.phone }}</p>
-      <a class="office__email info">{{ office.email }}</a>
+      <a class="office__email info" :href="'mailto:' + office.email">{{ office.email }}</a>
     </li>
   </ul>
 </template>

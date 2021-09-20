@@ -33,12 +33,17 @@
   width: 26.5%;
   height: 100vh;
 
+  z-index: 1;
+
+  background: var(--white-color);
+  box-shadow: 3px 0px 9px #777;
+
   overflow-y: scroll;
 }
 
 /* Hide scrollbar */
 .sidebar::-webkit-scrollbar {
-  width: 1px;
+  width: 0px;
 }
 
 
