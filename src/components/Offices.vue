@@ -41,7 +41,7 @@
   color: var(--blue-color);
 }
 
-.office__email:active {
+.office__email:hover {
   color: var(--orange-color);
 }
 
